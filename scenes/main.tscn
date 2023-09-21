@@ -2,14 +2,14 @@
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_ahusb"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_onms2"]
-[ext_resource type="Script" path="res://scripts/view.gd" id="5_bg0fr"]
+[ext_resource type="Script" path="res://PlayerView.cs" id="4_tpj12"]
 [ext_resource type="PackedScene" uid="uid://cnymdajj1vsqm" path="res://objects/platform.tscn" id="6_sdmev"]
 [ext_resource type="PackedScene" uid="uid://rjh4ifidqrfp" path="res://objects/platform_medium.tscn" id="7_ixpj3"]
 [ext_resource type="PackedScene" uid="uid://uqr4hswv6d2g" path="res://objects/platform_grass_large_round.tscn" id="8_4oh1e"]
 [ext_resource type="PackedScene" uid="uid://c8up71en5djgm" path="res://objects/platform_falling.tscn" id="9_2fnpo"]
 [ext_resource type="PackedScene" uid="uid://dtjvjdjl8cs6e" path="res://models/flag.glb" id="9_fw1f5"]
 [ext_resource type="PackedScene" uid="uid://dfpisimsgf5ce" path="res://objects/coin.tscn" id="10_fwhys"]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="11_apvpm"]
+[ext_resource type="Script" path="res://scripts/HUD.cs" id="11_ruy04"]
 [ext_resource type="PackedScene" uid="uid://dy017k58p20sk" path="res://objects/cloud.tscn" id="13_drtpy"]
 [ext_resource type="Texture2D" uid="uid://cd7oyc56ehkx1" path="res://sprites/coin.png" id="13_jfda3"]
 [ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="17_tk810"]
@@ -25,15 +25,15 @@ shadow_offset = Vector2(2, 2)
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_ahusb")
 
-[node name="Player" parent="." node_paths=PackedStringArray("view") instance=ExtResource("2_onms2")]
-view = NodePath("../View")
+[node name="Player" parent="." node_paths=PackedStringArray("View") instance=ExtResource("2_onms2")]
+View = NodePath("../PlayerView")
 
-[node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+[node name="PlayerView" type="Node3D" parent="." node_paths=PackedStringArray("PlayerTarget")]
 transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)
-script = ExtResource("5_bg0fr")
-target = NodePath("../Player")
+script = ExtResource("4_tpj12")
+PlayerTarget = NodePath("../Player")
 
-[node name="Camera" type="Camera3D" parent="View"]
+[node name="Camera" type="Camera3D" parent="PlayerView"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 current = true
 fov = 40.0
@@ -136,7 +136,7 @@ shadow_enabled = true
 shadow_opacity = 0.75
 
 [node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource("11_apvpm")
+script = ExtResource("11_ruy04")
 
 [node name="Icon" type="TextureRect" parent="HUD"]
 offset_left = 57.0
@@ -162,4 +162,4 @@ offset_bottom = 123.0
 text = "0"
 label_settings = SubResource("LabelSettings_38ys3")
 
-[connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
+[connection signal="CoinCollected" from="Player" to="HUD" method="OnCoinCollected"]
