@@ -9,7 +9,7 @@ public partial class AudioPlayer : Node
 
     private List<AudioStreamPlayer> _available = new List<AudioStreamPlayer>();  // The available players.
     private Queue<string> _queue = new Queue<string>();  // The queue of sounds to play.
-
+    
     public override void _Ready()
     {
         for (int i = 0; i < NumPlayers; i++)
@@ -23,8 +23,6 @@ public partial class AudioPlayer : Node
 
 			//p.OnStreamFinished += () => { this.StreamIsFinished(p); };
             //p.Connect("finished", this, nameof(StreamIsFinished), new Godot.Collections.Array {p});
-			//inv_slot.connect("gui_input", slot_gui_input.bind(inv_slot))
-			//inv_slot.gui_input.connect(slot_gui_input.bind(inv_slot))
 			//p.Finished.connect(StreamIsFinished.bind(p));
 			p.Finished += () => { this.StreamIsFinished(p); };
             p.Bus = Bus;

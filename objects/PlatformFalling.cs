@@ -6,6 +6,13 @@ public partial class PlatformFalling : Node3D
     private bool _falling = false;
     private float _gravity = 0.0f;
 
+    private AudioPlayer AudioPlayer;
+
+    public override void _Ready()
+	{
+		AudioPlayer = GetNode<AudioPlayer>("/root/AudioPlayer");
+	}
+
     public override void _Process(double delta)
     {
         Scale = Scale.Lerp(new Vector3(1, 1, 1), (float)delta * 10); // Animate scale
@@ -27,10 +34,7 @@ public partial class PlatformFalling : Node3D
     {
         if (!_falling)
         {
-            var audio = new AudioStreamPlayer();
-            audio.Stream = (AudioStream)GD.Load("res://sounds/fall.ogg");
-            audio.Play(); // Play sound
-
+            AudioPlayer.Play("res://sounds/fall.ogg");
             Scale = new Vector3(1.25f, 1, 1.25f); // Animate scale
         }
 

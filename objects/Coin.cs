@@ -6,11 +6,11 @@ public partial class Coin : Area3D
     private float _time = 0.0f;
     private bool _grabbed = false;
 
-	private AudioPlayer audio;
+	private AudioPlayer AudioPlayer;
 
 	public override void _Ready()
 	{
-		audio = GetNode<AudioPlayer>("/root/Audio");
+		AudioPlayer = GetNode<AudioPlayer>("/root/AudioPlayer");
 	}
     public void OnBodyEntered(Node body)
     {
@@ -19,7 +19,7 @@ public partial class Coin : Area3D
             body.Call("CollectCoin");
 
             // Play sound
-			audio.Play("res://sounds/coin.ogg");
+			AudioPlayer.Play("res://sounds/coin.ogg");
 
             GetNode<MeshInstance3D>("Mesh").QueueFree(); // Make invisible
             GetNode<CpuParticles3D>("Particles").Emitting = false; // Stop emitting stars

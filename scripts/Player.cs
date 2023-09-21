@@ -29,15 +29,15 @@ public partial class Player : CharacterBody3D
 	private AudioStreamPlayer SoundFootsteps;
 	private Node3D Model;
 	private AnimationPlayer Animation;
-	//private AudioPlayer audioPlayback;
+	private AudioPlayer AudioPlayer;
 
 	public override void _Ready()
 	{
+		AudioPlayer = GetNode<AudioPlayer>("/root/AudioPlayer");
 		ParticleTrail = GetNode<CpuParticles3D>("ParticlesTrail");
 		SoundFootsteps = GetNode<AudioStreamPlayer>("SoundFootsteps");
 		Model = GetNode<Node3D>("Character");
 		Animation = GetNode<AnimationPlayer>("Character/AnimationPlayer");
-		//audioPlayback = GetNode<AudioPlayer>("/root/Audio");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -69,7 +69,7 @@ public partial class Player : CharacterBody3D
 		if (IsOnFloor() && Gravity > 2 && !PreviouslyFloored)
 		{
 			Model.Scale = new Vector3(1.25f, 0.75f, 1.25f);
-			//audioPlayback.play("res://sounds/land.ogg");
+			AudioPlayer.Play("res://sounds/land.ogg");
 		}
 
 		PreviouslyFloored = IsOnFloor();
@@ -114,7 +114,7 @@ public partial class Player : CharacterBody3D
 		{
 			if (JumpSingle || JumpDouble)
 			{
-				//audioPlayback.play("res://sounds/jump.ogg");
+				AudioPlayer.Play("res://sounds/jump.ogg");
 			}
 
 			if (JumpDouble)
